@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -18,7 +21,19 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --stacktrace
+          cp app/build/outputs/apk/debug/app-debug.apk RadarEntregas.apk
       - uses: actions/upload-artifact@v4
         with:
           name: RadarEntregas-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: RadarEntregas.apk
+      # Publica el APK en "Releases" para descargarlo directo desde el celular.
+      - name: Publicar en Releases
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Radar de Entregas (build ${{ github.run_number }})
+          body: |
+            Descarga **RadarEntregas.apk**, ábrelo en tu celular y permite "Instalar apps desconocidas".
+          files: RadarEntregas.apk
+          make_latest: true
