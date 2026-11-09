@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Radar" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/fondo</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <color name="fondo">#F2F4F8</color>
+    <color name="icono_fondo">#2C47D6</color>
+</resources>
